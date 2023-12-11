@@ -42,6 +42,47 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
+    def do_show(self, line=""):
+        """Show command to print the string representation of an instance
+        """
+        if line == "":
+            print("** class name missing **")
+        else:
+            args = self.my_split(line)
+            if args[0] not in storage.cls_mapping().keys():
+                print("** class doen't exist **")
+            elif len(args) < 2:
+                print("** instance id missing **")
+            else:
+                obj = storage.all()
+                cls_id = f"{args[0]}.{args[1]}"
+
+                if cls_id in obj.keys():
+                    print(obj[cls_id])
+                else:
+                    print("** no instance found **")
+
+    def do_all(self, line=""):
+        """All command to print the string representation of all instances
+            based or not on the class name
+        """
+        inst_list = []
+        if line == "":
+            obj = storage.all()
+            inst_list = [f"{inst}" for inst in obj.values()]
+        else:
+            args = self.my_split(line)
+
+            if args[0] not in storage.cls_mapping().keys():
+                print("** class doesn't exist **")
+            else:
+                obj = storage.all().values()
+                for inst in obj:
+                    if inst.__class__.__name__ == args[0]:
+                        inst_list.append(str(inst))
+        print(inst_list)
+
+
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop("Welcome to AirBnB Console")
+    HBNBCommand().cmdloop("Welcome to AirBnB Consolei")
