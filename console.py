@@ -105,5 +105,45 @@ class HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
 
 
+    def do_update(self, line=""):
+        """update command updates an instance based on the class name and id
+            by adding or updating attribute
+        """
+        if line == "":
+            print("** class name missing **")
+        else:
+            args = self.my_split(line)
+            arg_len = len(args)
+            obj = storage.all()
+
+            if args[0] not in storage.cls_mapping().keys():
+                print("** class doesn't exist **")
+            elif arg_len < 2:
+                print("** instance id missing **")
+            elif f"{args[0]}.{args[1]}" not in obj.keys():
+                print("** no instance found **")
+            elif arg_len < 3:
+                print("** attribute name missing **")
+            elif arg_len < 4:
+                print("** value missing **")
+            else:
+                cls_id = f"{args[0]}.{args[1]}"
+                if hasattr(obj[cls_id], args[2]):
+                    # Get the dictionary representation of object
+                    #  and verify attribute type
+                    attr_type = type(obj[cls_id].to_dict()[args[2]])
+                    if attr_type is int:
+                        args[3] = int(args[3])
+                    elif attr_type is float:
+                        args[3] = float(args[3])
+                setattr(obj[cls_id], args[2], args[3])
+                obj[cls_id].save()
+
+    def my_split(self, line):
+        """Custom function for extracting arguments"""
+        import shlex
+        return shlex.split(line)
+
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop("Welcome to AirBnB Consolei")
