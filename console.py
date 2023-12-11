@@ -25,3 +25,23 @@ class HBNBCommand(cmd.Cmd):
         """
         print()
         return True
+        return shlex.split(line)
+
+    def do_create(self, line=""):
+        """Create command to create a new instance
+        """
+        if line:
+            args = self.my_split(line)
+            if args[0] in storage.cls_mapping().keys():
+                cls_name = storage.cls_mapping()[args[0]]
+                obj = cls_name()
+                obj.save()
+                print(obj.id)
+            else:
+                print("** class doesn't exist **")
+        else:
+            print("** class name missing **")
+
+
+if __name__ == '__main__':
+    HBNBCommand().cmdloop("Welcome to AirBnB Console")
