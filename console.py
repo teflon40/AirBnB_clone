@@ -104,7 +104,6 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** no instance found **")
 
-
     def do_update(self, line=""):
         """update command updates an instance based on the class name and id
             by adding or updating attribute
@@ -129,9 +128,8 @@ class HBNBCommand(cmd.Cmd):
             else:
                 cls_id = f"{args[0]}.{args[1]}"
                 if hasattr(obj[cls_id], args[2]):
-                    # Get the dictionary representation of object
-                    #  and verify attribute type
-                    attr_type = type(obj[cls_id].to_dict()[args[2]])
+                    # Get the attribute and verify it's type
+                    attr_type = type(getattr(obj[cls_id], args[2]))
                     if attr_type is int:
                         args[3] = int(args[3])
                     elif attr_type is float:
