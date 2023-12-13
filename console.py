@@ -50,7 +50,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = self.my_split(line)
             if args[0] not in storage.cls_mapping().keys():
-                print("** class doen't exist **")
+                print("** class doesn't exist **")
             elif len(args) < 2:
                 print("** instance id missing **")
             else:
@@ -91,7 +91,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = self.my_split(line)
             if args[0] not in storage.cls_mapping().keys():
-                print("** class doen't exist **")
+                print("** class doesn't exist **")
             elif len(args) < 2:
                 print("** instance id missing **")
             else:
